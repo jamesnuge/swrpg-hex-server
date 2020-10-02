@@ -1,0 +1,17 @@
+{
+  "name": "nodejs-starter",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jamesnuge/swrpg-hex-server"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.3.1"
+  }
+}
