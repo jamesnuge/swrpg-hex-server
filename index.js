@@ -6,7 +6,8 @@ const sessionStore = {};
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(rawMessage) {
-    const {sessionId, type} = JSON.parse(rawMessage);
+    const message = JSON.parse(rawMessage);
+    const {sessionId, type} = message;
     const session = sessionStore[sessionId];
     if (session) {
       switch (type) {
