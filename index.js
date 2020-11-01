@@ -22,7 +22,6 @@ wss.on('connection', function connection(ws) {
           break;
         case 'HEX_SELECTED':
           console.log('-> HEX_SELECTED')
-          console.log(JSON.stringify(session, null, 2));
           console.log('userId:', userId);
           console.log('sessionId:', sessionId);
           const messageWithUserDetails = withUserDetails(message, userId);
@@ -36,7 +35,11 @@ wss.on('connection', function connection(ws) {
               .filter((member) => member.id !== userId)
               .forEach((member) => member.send(messageWithUserDetails));
           }
-          session.state.selectedHex = message.payload;
+          if (session.state.selectedHex) {
+            session.state.selectedHex = undefined;
+          } else {
+            session.state.selectedHex = message.payload;
+          }
           break;
         case 'JOIN_SESSION':
           const {members} = sessionStore[message.user.sessionId];
