@@ -30,7 +30,7 @@ wss.on('connection', function connection(ws) {
             session.members.forEach((socket) => socket.send(messageWithUserDetails));
           } else {
             console.log('   -> is not the host')
-            session.host.send(message);
+            session.host.send(JSON.stringify(messageWithUserDetails));
             session.members
               .filter((member) => member.id !== userId)
               .forEach((member) => member.send(messageWithUserDetails));
@@ -42,6 +42,7 @@ wss.on('connection', function connection(ws) {
           }
           break;
         case 'JOIN_SESSION':
+          console.log(' -> processing join session')
           const {members} = sessionStore[message.user.sessionId];
           const memberToAdd = {
             id: userId,
@@ -68,7 +69,8 @@ wss.on('connection', function connection(ws) {
           if (session.state.selectedHex) {
             memberToAdd.send({
               type: 'HEX_SELECTED',
-              payload: session.state.selectedHex
+              payload: session.state.selectedHex,
+              origin: sessionId
             })
           }
           break;
