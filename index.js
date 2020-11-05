@@ -1,10 +1,24 @@
 const WebSocket = require('ws');
+const https = require('https');
+const http = require('http');
+const fs = require('fs');
+const utils = require('./src/state/util');
+
+console.log('Running in mode:', process.env.NODE_ENV);
+
 
 const PORT = process.env.SERVER_PORT;
 if (PORT) {
 
-  const wss = new WebSocket.Server({ port: PORT });
-
+  console.log('is production?', utils.isProduction());
+  const wss = new WebSocket.Server(
+    utils.isProduction() ?
+      { server: https.createServer({
+        cert: fs.readFileSync('./keys/server.cert'),
+        key: fs.readFileSync('./keys/server.key')
+      })} :
+      { port: PORT }
+  )
   const sessionStore = {};
 
   wss.on('connection', function connection(ws) {
@@ -110,6 +124,10 @@ if (PORT) {
       origin: userId
     }
   }
+  if (utils.isProduction()) {
+    wss.server.listen(PORT);
+  }
+  console.log('listening on port:', PORT);
 
 } else {
   throw new Error(`Misconfiguration: Server port env variable must be defined`)

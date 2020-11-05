@@ -10,6 +10,9 @@
     "url": "git://github.com/jamesnuge/swrpg-hex-server"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "https": "^1.0.0",
     "ws": "^7.3.1"
   },
   "devDependencies": {
