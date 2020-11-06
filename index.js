@@ -124,9 +124,9 @@ if (PORT) {
       origin: userId
     }
   }
-  if (utils.isProduction()) {
-    wss.server.listen(PORT);
-  }
+  // if (utils.isProduction()) {
+    // wss.server.listen(PORT);
+  // }
   console.log('listening on port:', PORT);
 
 } else {
