@@ -12,11 +12,11 @@ if (PORT) {
 
   console.log('is production?', utils.isProduction());
   const wss = new WebSocket.Server(
-    utils.isProduction() ?
-      { server: https.createServer({
-        cert: fs.readFileSync('./keys/server.cert'),
-        key: fs.readFileSync('./keys/server.key')
-      })} :
+    // utils.isProduction() ?
+    //   { server: https.createServer({
+    //     cert: fs.readFileSync('./keys/server.cert'),
+    //     key: fs.readFileSync('./keys/server.key')
+    //   })} :
       { port: PORT }
   )
   const sessionStore = {};
